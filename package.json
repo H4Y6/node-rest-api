@@ -3,17 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "start": "node index",
-  "dev": "nodemon index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cross-env NODE_ENV=production node ./server.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon ./server.js",
+    "lint": "eslint **/*.js",
+    "lint:fix": "eslint --fix **/*.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "cross-env": "^7.0.3",
+    "express": "^4.18.2",
+    "joi": "^17.7.0",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.3.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
