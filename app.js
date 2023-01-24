@@ -8,7 +8,7 @@ const app = express();
 const formatLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatLogger));
 app.use(cors());
-
+app.use(express.json());
 app.use("/api/contacts", contactsRouter);
 
 app.use((req, res, next) => {
@@ -16,7 +16,8 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(500).json({ message: "Server error" });
+  const { status = 500, message = "Server error" } = err;
+  res.status(status).json({ message });
 });
 
 module.exports = app;
