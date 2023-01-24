@@ -72,4 +72,27 @@ const add = async (name, email, phone) => {
   return newContact;
 };
 
-module.exports = { listContacts, getById, add };
+const updateById = async (id, name, email, phone) => {
+  const contacts = await listContacts();
+  const newContact = { id, name, email, phone };
+  const idx = contacts.findIndex((c) => c.id === id);
+  if (idx === -1) {
+    return null;
+  }
+  contacts[idx] = newContact;
+  await updateContacts(contacts);
+  return newContact;
+};
+
+const deleteContact = async (id) => {
+  const contacts = await listContacts();
+  const idx = contacts.findIndex((c) => c.id === id);
+  if (idx === -1) {
+    return null;
+  }
+  [dele] = contacts.splice(idx, 1);
+  await updateContacts(contacts);
+  return dele;
+};
+
+module.exports = { listContacts, getById, add, updateById, deleteContact };

@@ -50,4 +50,31 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.put("/:id", async (req, res, next) => {
+  try {
+    const { error } = contactsAddSchema.validate(req.body);
+    if (error) {
+      throw createError(400, error.message);
+    }
+    const { id } = req.params;
+    const { name, email, phone } = req.body;
+    const result = await contacts.updateById(id, name, email, phone);
+    if (!result) {
+      throw createError(404);
+    }
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const result = await contacts.deleteContact(id);
+  if (!result) {
+    throw createError(404);
+  }
+  res.json("Contact deleted");
+});
+
 module.exports = router;
