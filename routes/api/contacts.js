@@ -44,7 +44,7 @@ router.post("/", async (req, res, next) => {
     }
     const { name, email, phone } = req.body;
     const result = await contacts.add(name, email, phone);
-    res.status(204).json(result);
+    res.status(201).json(result);
   } catch (error) {
     next(error);
   }
