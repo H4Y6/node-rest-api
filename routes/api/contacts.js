@@ -1,13 +1,9 @@
 const express = require("express");
-const { ctrlWrapper } = require("../../helpers");
-const ctrl = require("../../controllers/contacts");
+const { basedir } = global;
 
-const Joi = require("joi");
-const contactsAddSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
-  phone: Joi.string().required(),
-});
+const { ctrlWrapper } = require(`${basedir}/helpers`);
+const { auth } = require(`${basedir}/middlewares`);
+const ctrl = require(`${basedir}/controllers/contacts`);
 
 const router = express.Router();
 
@@ -15,7 +11,7 @@ router.get("/", ctrlWrapper(ctrl.getAll));
 
 router.get("/:id", ctrlWrapper(ctrl.getById));
 
-router.post("/", ctrlWrapper(ctrl.add));
+router.post("/", auth, ctrlWrapper(ctrl.add));
 
 router.put("/:id", ctrlWrapper(ctrl.updateById));
 
