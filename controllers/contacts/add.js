@@ -1,5 +1,6 @@
-const { Contact, schemas } = require("../models");
-const { createError } = require("../helpers");
+const { basedir } = global;
+const { Contact, schemas } = require(`${basedir}/models/contacts`);
+const { createError } = require(`${basedir}/helpers`);
 
 const add = async (req, res, next) => {
   const { error } = schemas.add.validate(req.body);
