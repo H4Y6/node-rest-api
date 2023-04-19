@@ -13,12 +13,13 @@ const login = async (req, res) => {
   }
   const { email, password } = req.body;
   const user = await User.findOne({ email });
+  const faultMessage = "Wrong email or password.";
   if (!user || !user.token) {
-    throw createError(401, "Wrong email");
+    throw createError(401, faultMessage);
   }
   const comparePassword = await bcrypt.compare(password, user.password);
   if (!comparePassword) {
-    throw createError(401, "Wrong password.");
+    throw createError(401, faultMessage);
   }
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
