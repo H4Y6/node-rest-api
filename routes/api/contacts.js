@@ -1,6 +1,6 @@
 const express = require("express");
 const { ctrlWrapper } = require("../../helpers");
-const ctrl = require("../../controllers");
+const ctrl = require("../../controllers/contacts");
 
 const Joi = require("joi");
 const contactsAddSchema = Joi.object({
