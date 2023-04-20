@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const logger = require("morgan");
 require("dotenv").config();
+const fs = require("fs/promises");
 global.basedir = __dirname;
 
 const contactsRouter = require("./routes/api/contacts");
@@ -11,6 +12,12 @@ const app = express();
 
 const formatLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatLogger));
+app.use(async (req, res, next) => {
+  const date = new Date().toString().slice(0, 25);
+  const { method, url } = req;
+  await fs.appendFile(".server.log", `${date} ${method} ${url}\n `);
+  next();
+});
 app.use(cors());
 app.use(express.json());
 
