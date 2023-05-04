@@ -3,7 +3,7 @@ const express = require("express");
 const { basedir } = global;
 const ctrl = require(`${basedir}/controllers/auth`);
 const { ctrlWrapper } = require(`${basedir}/helpers`);
-const { auth, upload, manipulateImg } = require(`${basedir}/middlewares`);
+const { auth, upload } = require(`${basedir}/middlewares`);
 
 const router = express.Router();
 
@@ -15,7 +15,6 @@ router.patch("/", auth, ctrlWrapper(ctrl.updateSubscription));
 router.patch(
   "/avatars",
   auth,
-  manipulateImg,
   upload.single("avatar"),
   ctrlWrapper(ctrl.setAvatar)
 );
